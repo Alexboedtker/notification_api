@@ -8,6 +8,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   def show
     @notification = Notification.find(params[:id])
     authorize @notification
+    @notification.update!(seen: true)
   end
 
   def create
