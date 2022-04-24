@@ -1,8 +1,13 @@
 class Api::V1::NotificationsController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User, only: [ :index, :create ], fallback: :exception
+  acts_as_token_authentication_handler_for User, only: [ :index, :show, :create ], fallback: :exception
 
   def index
     @notifications = policy_scope(Notification)
+  end
+
+  def show
+    @notification = Notification.find(params[:id])
+    authorize @notification
   end
 
   def create

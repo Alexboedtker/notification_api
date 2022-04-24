@@ -3,6 +3,10 @@ class NotificationPolicy < ApplicationPolicy
     user.admin? || user.client?
   end
 
+  def show?
+    user.client?
+  end
+
   def create?
     user.admin?
   end
