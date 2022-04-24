@@ -2,6 +2,8 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
+    raise Pundit::NotAuthorizedError, 'must be logged in' if user.blank?
+
     @user = user
     @record = record
   end
@@ -43,6 +45,7 @@ class ApplicationPolicy
     end
 
     def resolve
+      # return scope.all if admin.super_admin?
       scope.all
     end
   end

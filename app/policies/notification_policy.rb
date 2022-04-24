@@ -1,4 +1,12 @@
 class NotificationPolicy < ApplicationPolicy
+  def index?
+    user.admin? || user.client?
+  end
+
+  def create?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       if user.client?
@@ -6,18 +14,6 @@ class NotificationPolicy < ApplicationPolicy
       else
         scope.all
       end
-    end
-
-    def index?
-      user.admin? || user.client?
-    end
-
-    def show?
-      user.admin? || user.client?
-    end
-
-    def create?
-      user.admin?
     end
   end
 end

@@ -1,10 +1,8 @@
 class Api::V1::NotificationsController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User, only: [ :index, :show, :create ], fallback: :exception
-  before_action :require_authentication!, only: [ :index, :show, :create ]
-  before_action :set_notification, only: [ :show, :update ]
+  acts_as_token_authentication_handler_for User, only: [ :index, :create ], fallback: :exception
 
   def index
-    @notifications = policy_scope(Notification) #check the policy if it's showing the correct notifications lewagon video
+    @notifications = policy_scope(Notification)
   end
 
   def create
@@ -12,22 +10,13 @@ class Api::V1::NotificationsController < Api::V1::BaseController
     @notification.admin = current_user
     authorize @notification
     if @notification.save
-      render :show, status: :created
+      render :index, status: :created
     else
       render_error
     end
   end
 
   private
-
-  def require_authentication!
-    throw(:warden, scope: :user) unless current_user.presence
-  end
-
-  def set_notification
-    @notification = Notification.find(params[:id])
-    authorize @notification  # For Pundit
-  end
 
   def notification_params
     params.require(:notification).permit(:date, :title, :description, :client_id)
