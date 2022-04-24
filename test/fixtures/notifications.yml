@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2022-04-24 12:30:58
+  title: MyString
+  description: MyText
+  admin_id: one
+  client_id: one
+
+two:
+  date: 2022-04-24 12:30:58
+  title: MyString
+  description: MyText
+  admin_id: two
+  client_id: two
