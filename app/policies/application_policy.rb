@@ -45,7 +45,6 @@ class ApplicationPolicy
     end
 
     def resolve
-      # return scope.all if admin.super_admin?
       scope.all
     end
   end
